@@ -27,7 +27,7 @@ class TicketsImport:
         ticketDataDf['assignee_id'].fillna(391738466778,inplace=True)
         ticketDataDf['status']=ticketDataDf['status'].apply(lambda x: statusMap[x] if x in statusMap.keys() else x)
         listTicketDataDf = getSplittedDf(ticketDataDf)
-        i=0
+        
         for ticketdata in listTicketDataDf:
             tickets = []
             for index, row in ticketdata.iterrows():
