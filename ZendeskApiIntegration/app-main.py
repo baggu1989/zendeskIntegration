@@ -1,6 +1,6 @@
 import argparse
-from  ZendeskApiIntegration.apps.tickets_import import TicketsImport
-from ZendeskApiIntegration.apps.user_import import  UsersImport
+from  ZendeskApiIntegration.apps.api.tickets_import import TicketsImport
+from ZendeskApiIntegration.apps.api.user_import import  UsersImport
 def main():
     parser = argparse.ArgumentParser(description='Zendesk API Integration Inputs.')
     parser.add_argument('configLocation')
