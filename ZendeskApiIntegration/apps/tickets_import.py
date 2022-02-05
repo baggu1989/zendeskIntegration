@@ -5,17 +5,9 @@ Contains a logic generate a payload
 """
 from requests.auth import HTTPBasicAuth
 from ZendeskApiIntegration.apps.utility import *
+from ZendeskApiIntegration.apps.constant import *
 
-statusMap={'Legacy Status':'Zendesk Status',
-          'new':'New',
-          'open':'Open',
-          'assigned':'Open',
-          'waiting':'Pending',
-          'external':'On Hold',
-          'engineering':'On Hold',
-          'resolved':'Solved',
-          'done':'Closed',
-          'retracted':'Closed'}
+
 
 class TicketsImport:
     def __init__(self,configFilePath):
@@ -24,7 +16,7 @@ class TicketsImport:
 
     def uploadticketData(self):
         ticketDataDf = getinputDatafromCsv(self.config['TicketDataLocation'])
-        ticketDataDf['assignee_id'].fillna(391738466778,inplace=True)
+        ticketDataDf['assignee_id'].fillna(default_assign_id,inplace=True)
         ticketDataDf['status']=ticketDataDf['status'].apply(lambda x: statusMap[x] if x in statusMap.keys() else x)
         listTicketDataDf = getSplittedDf(ticketDataDf)
         for ticketdata in listTicketDataDf:
