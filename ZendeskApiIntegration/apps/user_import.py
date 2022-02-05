@@ -18,8 +18,7 @@ class UsersImport:
         listUserDataDf=getSplittedDf(userDf)
         for userdata in listUserDataDf:
             users = []
-            for index, row in userdata.iterrows():
-                users.append(self.createJson(row))
+            userdata.apply(lambda row : users.append(self.createJson(row)),axis=1)
             data = {'users': users}
             auth=HTTPBasicAuth(self.config['UserName'], self.config['Password'])
             resp,status=invokeApi(self.config['UserImportUrl'], data ,auth)

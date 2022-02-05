@@ -27,11 +27,9 @@ class TicketsImport:
         ticketDataDf['assignee_id'].fillna(391738466778,inplace=True)
         ticketDataDf['status']=ticketDataDf['status'].apply(lambda x: statusMap[x] if x in statusMap.keys() else x)
         listTicketDataDf = getSplittedDf(ticketDataDf)
-        
         for ticketdata in listTicketDataDf:
             tickets = []
-            for index, row in ticketdata.iterrows():
-                tickets.append(self.createJson(row))
+            ticketdata.apply(lambda row : tickets.append(self.createJson(row)),axis=1)
             data = {'tickets': tickets}
             auth=HTTPBasicAuth(self.config['UserName'], self.config['Password'])
             resp,status=invokeApi(self.config['TicketImportUrl'], data ,auth)
